@@ -1,0 +1,311 @@
+{
+	"info": {
+		"_postman_id": "13efebd8-ba93-4c2c-8af5-ba2a82f8f252",
+		"name": "AccountManagementSystem",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "NewCustomerWithAccountDetails",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"customerName\":\"Ruchi\",\n\t\"customerContact\":\"9731087744\",\n\t\"customerEmail\":\"ruchiranjan@outlook.com\",\n\t\"customerDob\":\"1990-12-30\",\n    \"customerAddress\":[\n    \t{\n    \t  \"addressStreet\":\"Doddathogur\",\n\t       \"addressCity\":\"Bangalore\",\n\t       \"addressPin\":\"560100\",\n\t       \"addressType\" :\"MAILING_ADDRESS\"\n    \t},\n    \t{\n    \t  \"addressStreet\":\"Doddathogur1\",\n\t       \"addressCity\":\"Bangalore1\",\n\t       \"addressPin\":\"560100\",\n\t       \"addressType\" :\"PERMANENT_ADDRESS\"\n    \t}\n    \t],\n    \t\n\t   \"accounts\":[\n\t   \t{\n\t        \"ifsc\":\"IFSC004\",\n            \"accountType\":\"SAVINGS\",\n\t        \"availableBalance\":1000,\n\t        \"accountStatus\":\"ACTIVE\"\n\t   \t},\n\t   \t{\n\t        \"ifsc\":\"IFSC004\",\n            \"accountType\":\"CURRENT\",\n\t        \"availableBalance\":2000,\n\t        \"accountStatus\":\"ACTIVE\"\n\t   \t}\n\t   \t] \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCustomerWithCustomerId",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t \"customerId\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateCustomerDetails",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t \"customerId\": 1,\n\t \"customerContact\":\"9731087745\",\n\t \"customerEmail\":\"ruchiranjan1@outlook.com\",\n\t \"accounts\":[\n\t   \t{\n\t        \"ifsc\":\"IFSC004\",\n            \"accountType\":\"SAVINGS\",\n\t        \"availableBalance\":100000,\n\t        \"accountStatus\":\"INACTIVE\"\n\t   \t}\n\t   \n\t   \t] \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteCustomerByCustomerId",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t \"customerId\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NewAccountWithCustomer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n\t        \"ifsc\":\"IFSC004\",\n            \"accountType\":\"SAVINGS\",\n\t        \"availableBalance\":1000,\n\t        \"accountStatus\":\"ACTIVE\",\n\t        \"customer\":{\n\t            \"customerName\":\"Ruchi\",\n             \t\"customerContact\":\"9731087744\",\n             \t\"customerEmail\":\"ruchiranjan@outlook.com\",\n\t            \"customerDob\":\"1990-12-30\",\n                \"customerAddress\":[\n                  \t{\n    \t                      \"addressStreet\":\"Doddathogur\",\n\t                          \"addressCity\":\"Bangalore\",\n\t                          \"addressPin\":\"560100\",\n\t                          \"addressType\" :\"MAILING_ADDRESS\"\n    \t            },\n    \t            {\n    \t                      \"addressStreet\":\"Doddathogur1\",\n\t                          \"addressCity\":\"Bangalore1\",\n\t                          \"addressPin\":\"560100\",\n\t                          \"addressType\" :\"PERMANENT_ADDRESS\"\n    \t             }\n    \t          ]\n\t   \t    }\n}\t  \n\t   \t\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/accounts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByAccountNumber",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9090/accounts/account/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"accounts",
+						"account",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByIFSCCode",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/accounts/IFSC004",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"accounts",
+						"IFSC004"
+					],
+					"query": [
+						{
+							"key": "accept",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateAccount",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"availableBalance\":1000,\n  \"accountStatus\":\"INACTIVE\"\t\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/accounts/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"accounts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteAccountByAccountNumber",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/accounts/account/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"accounts",
+						"account",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

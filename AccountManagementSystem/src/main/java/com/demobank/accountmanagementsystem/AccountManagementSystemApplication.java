@@ -9,6 +9,7 @@ public class AccountManagementSystemApplication {
 	public static void main(String[] args) {
 		
 		SpringApplication.run(AccountManagementSystemApplication.class, args);
+	
 	}
 
 }

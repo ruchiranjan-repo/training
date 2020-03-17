@@ -27,100 +27,84 @@ import com.demobank.accountmanagementsystem.models.Account;
 public class AccountRepositoryTest {
 	
 	
-	
-	@Autowired
-	TestEntityManager testEntityManager;
-	
-	@Autowired
-	AccountRepository accountRepository;
-	
-	Account account, account1;
-	
-	
-	@BeforeEach
-	public void setUpTestData()
-	{
-		account= new Account();
-		account.setAccountNumber(ACCOUNT_NUMBER_100001L);
-		account.setAccountType(AccountType.SAVINGS.toString());
-		account.setAccountStatus(AccountStatus.ACTIVE.toString());		
-		account.setAvailableBalance(AVAILABLE_BALANCE);
-		account.setIfsc(IFSC_CODE_IFSC0001);
-		
-		account1= new Account();
-		account1.setAccountNumber(ACCOUNT_NUMBER_100L);
-		account1.setAccountType(AccountType.SAVINGS.toString());
-		account1.setAccountStatus(AccountStatus.ACTIVE.toString());		
-		account1.setAvailableBalance(AVAILABLE_BALANCE);
-		account1.setIfsc(IFSC_CODE_IFSC0001);
-	}
-	
-	
-	@Test
-	public void testFindByAccountNumber()
-	{
-		testEntityManager.persistAndFlush(account);	
-		
-		Account account=accountRepository.findByAccountNumber(ACCOUNT_NUMBER_100001L);
-		
-		assertThat(account.getAccountNumber()).isEqualTo(ACCOUNT_NUMBER_100001L);
-		assertThat(account.getAccountType()).isEqualTo(AccountType.SAVINGS.toString());
-		assertThat(account.getAvailableBalance()).isEqualTo(AVAILABLE_BALANCE);
-		
-		
-	}
-	
-	@Test
-	public void testFindByAccountNumberNotExists()
-	{
-		testEntityManager.persistAndFlush(account);	
-		
-		Account account=accountRepository.findByAccountNumber(ACCOUNT_NUMBER_100L);		
-		
-		assertNull(account);
-		
-	}
-	
-	@Test
-	public void testFindByIfscCode()
-	{
-		
-		List<Account> accounts= new ArrayList<Account>();
-		accounts.add(account);
-		accounts.add(account1);
-		
-		testEntityManager.persistAndFlush(account);	
-		testEntityManager.persistAndFlush(account1);	
-		
-		List<Account> accountList=accountRepository.findByIfsc(IFSC_CODE_IFSC0001);
-		
-		
-		assertFalse(accountList.isEmpty());
-		assertThat(accountList.size()).isEqualTo(accounts.size());
-		
-	}
-	
-
-	@Test
-	public void testFindByIfscCodeNotExists()
-	{
-		
-		List<Account> accounts= new ArrayList<Account>();
-		accounts.add(account);
-		accounts.add(account1);
-		
-		testEntityManager.persistAndFlush(account);	
-		testEntityManager.persistAndFlush(account1);	
-		
-		List<Account> accountList=accountRepository.findByIfsc(IFSC_CODE_IFSC0002);
-		
-		
-		assertTrue(accountList.isEmpty());
-		assertThat(accountList.size()).isEqualTo(0);
-		
-	}
-	
-	
+	   
+	   @Autowired TestEntityManager testEntityManager;
+	   
+	   @Autowired AccountRepository accountRepository;
+	   
+	   Account account, account1;
+	   
+	   
+	   @BeforeEach public void setUpTestData() { account= new Account();
+	   account.setAccountNumber(ACCOUNT_NUMBER_100001L);
+	   account.setAccountType(AccountType.SAVINGS.toString());
+	   account.setAccountStatus(AccountStatus.ACTIVE.toString());
+	   account.setAvailableBalance(AVAILABLE_BALANCE);
+	   account.setIfsc(IFSC_CODE_IFSC0001);
+	   
+	   account1= new Account(); account1.setAccountNumber(ACCOUNT_NUMBER_100L);
+	   account1.setAccountType(AccountType.SAVINGS.toString());
+	   account1.setAccountStatus(AccountStatus.ACTIVE.toString());
+	   account1.setAvailableBalance(AVAILABLE_BALANCE);
+	   account1.setIfsc(IFSC_CODE_IFSC0001); }
+	   
+	   
+	   @Test public void testFindByAccountNumber() {
+	   testEntityManager.persistAndFlush(account);
+	   
+	   Account
+	   account=accountRepository.findByAccountNumber(ACCOUNT_NUMBER_100001L);
+	   
+	   assertThat(account.getAccountNumber()).isEqualTo(ACCOUNT_NUMBER_100001L);
+	   assertThat(account.getAccountType()).isEqualTo(AccountType.SAVINGS.toString()
+	   ); assertThat(account.getAvailableBalance()).isEqualTo(AVAILABLE_BALANCE);
+	   
+	   
+	   }
+	   
+	   @Test public void testFindByAccountNumberNotExists() {
+	   testEntityManager.persistAndFlush(account);
+	   
+	   Account account=accountRepository.findByAccountNumber(ACCOUNT_NUMBER_100L);
+	   
+	   assertNull(account);
+	   
+	   }
+	   
+	   @Test public void testFindByIfscCode() {
+	   
+	   List<Account> accounts= new ArrayList<Account>(); accounts.add(account);
+	   accounts.add(account1);
+	   
+	   testEntityManager.persistAndFlush(account);
+	   testEntityManager.persistAndFlush(account1);
+	   
+	   List<Account> accountList=accountRepository.findByIfsc(IFSC_CODE_IFSC0001);
+	   
+	   
+	   assertFalse(accountList.isEmpty());
+	   assertThat(accountList.size()).isEqualTo(accounts.size());
+	   
+	   }
+	   
+	   
+	   @Test public void testFindByIfscCodeNotExists() {
+	   
+	   List<Account> accounts= new ArrayList<Account>(); accounts.add(account);
+	   accounts.add(account1);
+	   
+	   testEntityManager.persistAndFlush(account);
+	   testEntityManager.persistAndFlush(account1);
+	   
+	   List<Account> accountList=accountRepository.findByIfsc(IFSC_CODE_IFSC0002);
+	   
+	   
+	   assertTrue(accountList.isEmpty());
+	   assertThat(accountList.size()).isEqualTo(0);
+	   
+	   }
+	   
+	 
 	
 	
 	

@@ -2,20 +2,24 @@ package com.demobank.accountmanagementsystem.services;
 
 import java.util.List;
 
+import com.demobank.accountmanagementsystem.dto.AccountDTO;
+import com.demobank.accountmanagementsystem.dto.TransactionDTO;
 import com.demobank.accountmanagementsystem.exceptions.AccountNumberNotFoundException;
-import com.demobank.accountmanagementsystem.models.Account;
+import com.demobank.accountmanagementsystem.exceptions.TransactionFailedException;
 
 public interface AccountService {
 	
-	Account createAccount(Account account) ;
+	AccountDTO createAccount(AccountDTO account) ;
 	
-	Account updateAccount(Long accountNumber, Account account)  throws AccountNumberNotFoundException;
+	AccountDTO updateAccount(Long accountNumber, AccountDTO account)  throws AccountNumberNotFoundException;
 	
-	Account deleteAccount(Long accountNumber)  throws AccountNumberNotFoundException;
+	AccountDTO deleteAccount(Long accountNumber)  throws AccountNumberNotFoundException;
 	
-	Account fetchAccountByAccountNumber(Long accountNumber)  throws AccountNumberNotFoundException;
+	AccountDTO fetchAccountByAccountNumber(Long accountNumber)  throws AccountNumberNotFoundException;
 	
-	List<Account> fetchAccountsByIfscCode(String ifscCode) throws AccountNumberNotFoundException;
+	List<AccountDTO> fetchAccountsByIfscCode(String ifscCode) throws AccountNumberNotFoundException;
+	
+	void initiateTransaction(TransactionDTO transaction) throws TransactionFailedException;
 	
 
 }
