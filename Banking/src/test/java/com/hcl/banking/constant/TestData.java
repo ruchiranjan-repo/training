@@ -1,5 +1,6 @@
 package com.hcl.banking.constant;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.hcl.banking.constants.AddressEnum;
@@ -16,4 +17,13 @@ public class TestData {
 	public static final Long ACCOUNT_NUMBER=1000L;
 	public static final String IFSC_CODE="IFSC001" ;
 	public static final String IFSC_CODE_NOT_FOUND="IFSC002" ;
+	public static final BigDecimal AMOUNT_TRANSAFERED=new BigDecimal(200);
+	public static final Long ACCOUNT_NUMBER_1=1001L;
+	public static final Long CUSTOMER_ID = 100101L;
+	public static final Long ACCOUNT_ID_2 = 100102L;
+	public static final Long ACCOUNT_ID_3 = 100103L;
+	public static final Long TRANSACTION_REF_1 = 1L;
+	public static final Long TRANSACTION_REF_2 = 2L;
+	public static final Long TRANSACTION_REF_3 = 3L;
+	public static final Long TRANSACTION_REF_4 = 4L;
 }

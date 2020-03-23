@@ -70,4 +70,21 @@ public class TransactionDTO {
 		this.transactionStatus = transactionStatus;
 	}
 
+	public TransactionDTO(Long transactionReference, Long benificiaryAccount, String transactionType,
+			LocalDateTime transactionDate, BigDecimal amount, Long fromAccount, String transactionStatus) {
+		super();
+		this.transactionReference = transactionReference;
+		this.benificiaryAccount = benificiaryAccount;
+		this.transactionType = transactionType;
+		this.transactionDate = transactionDate;
+		this.amount = amount;
+		this.fromAccount = fromAccount;
+		this.transactionStatus = transactionStatus;
+	}
+	
+	public TransactionDTO()
+	{
+		
+	}
+
 }
