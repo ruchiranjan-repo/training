@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.demoairline.flightmonitoring.constants.Constant;
 import com.demoairline.flightmonitoring.dto.ExceptionMessageDTO;
 
 @ControllerAdvice
@@ -93,4 +94,15 @@ public class GlobalExceptionHandler {
 		ExceptionMessageDTO exceptionMessageDTO= new ExceptionMessageDTO(flightScheduleDateTimeException.getMessage(), flightScheduleDateTimeException.getErrorCode());
 		return new ResponseEntity<>(exceptionMessageDTO, HttpStatus.NOT_FOUND);
 	}
+	
+	@ExceptionHandler(FlightScheduleAlreadyDeletedException.class)
+	ResponseEntity<ExceptionMessageDTO>flightScheduleAlreadyDeleted(FlightScheduleAlreadyDeletedException ex)
+	{
+		ExceptionMessageDTO exceptionDto=new ExceptionMessageDTO();
+		exceptionDto.setMessage(ex.getMessage());
+		exceptionDto.setErrorCode(Constant.FlightScheduleDeletedCode);
+		return new ResponseEntity<>(exceptionDto,HttpStatus.OK);
+	}
+	
+	
 }

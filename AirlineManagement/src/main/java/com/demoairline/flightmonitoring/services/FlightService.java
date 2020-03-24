@@ -7,6 +7,6 @@ public interface FlightService {
 
 	FlightResponse getFlightByFlightId(Long flightId);
 
-	FlightsResponse getFlights(Integer pageSize, Integer pageNumber);
+	FlightsResponse getFlights();
 
 }

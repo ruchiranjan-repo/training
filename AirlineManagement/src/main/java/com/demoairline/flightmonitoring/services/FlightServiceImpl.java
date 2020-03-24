@@ -40,11 +40,11 @@ public class FlightServiceImpl implements FlightService {
 		return flightResponse;
 	}
 
-	public FlightsResponse getFlights(Integer pageSize, Integer pageNumber) {
+	public FlightsResponse getFlights() {
 
-		PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "flightId");
+	
 
-		List<Flight> flights = flightRepository.findAll(pageRequest).getContent();
+		List<Flight> flights = flightRepository.findAll();
 
 		if (flights.isEmpty()) {
 			throw new FlightsNotFoundException();

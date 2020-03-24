@@ -27,3 +27,8 @@ insert into flight values(3,'AI001','BLR-CHENNAI','AVAILABLE','DOMESTIC',80,2);
 insert into runway values(1,'A','AVAILABLE',1)				
 insert into runway values(2,'B','AVAILABLE',1)				
 insert into runway values(3,'A','AVAILABLE',2)				
+
+
+insert into runway values(1,'A',1);				
+insert into runway values(2,'B',1);				
+insert into runway values(3,'A',2);			

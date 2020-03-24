@@ -30,10 +30,7 @@ public class Runway implements Serializable {
 	@NotNull
 	private String runway;
 	
-	@Column(name="runway_status")
-	@NotNull
-	private String runwayStatus;	
-	
+
 
 	public Long getRunwayID() {
 		return runwayID;
@@ -51,13 +48,6 @@ public class Runway implements Serializable {
 		this.runway = runway;
 	}
 
-	public String getRunwayStatus() {
-		return runwayStatus;
-	}
-
-	public void setRunwayStatus(String runwayStatus) {
-		this.runwayStatus = runwayStatus;
-	}
-
+	
 	
 }

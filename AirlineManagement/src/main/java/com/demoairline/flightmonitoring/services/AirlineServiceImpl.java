@@ -24,11 +24,11 @@ public class AirlineServiceImpl implements AirlineService {
 	@Autowired
 	private AirlineRepository airlineRepository;
 
-	public AirLinesResponse getAirlines(Integer pageSize, Integer pageNumber) {
+	public AirLinesResponse getAirlines() {
 		
-		PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "airlineId");
+		
 
-		List<Airline> airlines = airlineRepository.findAll(pageRequest).getContent();
+		List<Airline> airlines = airlineRepository.findAll();
 		if (airlines.isEmpty()) {
 			throw new AirLinesNotFoundException();
 		}

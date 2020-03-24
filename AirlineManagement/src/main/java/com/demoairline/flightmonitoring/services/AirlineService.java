@@ -5,7 +5,7 @@ import com.demoairline.flightmonitoring.dto.AirLinesResponse;
 
 public interface AirlineService {
 
-	AirLinesResponse getAirlines(Integer pageSize, Integer pageNumber);
+	AirLinesResponse getAirlines();
 
 	AirLineResponse getAirlinesByAirlinId(Long airlineId);
 

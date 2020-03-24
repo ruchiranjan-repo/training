@@ -7,6 +7,7 @@ package com.demoairline.flightmonitoring.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,10 +27,10 @@ public class FlightSchedule implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long scheduleId;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	Flight flight;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	Airport airport;
 
 	@Column(name = "scheduled_date_time")
@@ -47,6 +48,10 @@ public class FlightSchedule implements Serializable {
 	@Column(name = "flight_code")
 	@NotNull
 	private String flightCode;
+	
+	@Column(name = "scheduled_status")
+	@NotNull
+	private String scheduleStatus;
 
 	public Long getScheduleId() {
 		return scheduleId;
@@ -102,6 +107,14 @@ public class FlightSchedule implements Serializable {
 
 	public void setFlightCode(String flightCode) {
 		this.flightCode = flightCode;
+	}
+
+	public String getScheduleStatus() {
+		return scheduleStatus;
+	}
+
+	public void setScheduleStatus(String scheduleStatus) {
+		this.scheduleStatus = scheduleStatus;
 	}
 	
 	

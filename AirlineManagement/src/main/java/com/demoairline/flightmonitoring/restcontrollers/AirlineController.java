@@ -33,12 +33,11 @@ public class AirlineController {
 	 * @return All airlines details
 	 */
 	@GetMapping("")
-	public ResponseEntity<AirLinesResponse> getAirlines(@RequestParam Integer pageSize,
-			@RequestParam Integer pageNumber) {
+	public ResponseEntity<AirLinesResponse> getAirlines() {
 
 		logger.info("Fetching airlines details");
 
-		return new ResponseEntity<>(airlineService.getAirlines(pageSize, pageNumber), HttpStatus.OK);
+		return new ResponseEntity<>(airlineService.getAirlines(), HttpStatus.OK);
 	}
 
 	/**

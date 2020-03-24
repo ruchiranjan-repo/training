@@ -16,4 +16,21 @@ public class FlightResponse {
 		this.statusCode = statusCode;
 	}
 
+	public Flight getFlight() {
+		return flight;
+	}
+
+	public void setFlight(Flight flight) {
+		this.flight = flight;
+	}
+
+	public Integer getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(Integer statusCode) {
+		this.statusCode = statusCode;
+	}
+
+	
 }

@@ -7,16 +7,20 @@ import java.time.LocalDateTime;
  */
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.jboss.logging.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import com.demoairline.flightmonitoring.constants.RunwayAvailabilityStatusEnum;
+import com.demoairline.flightmonitoring.constants.Constant;
+import com.demoairline.flightmonitoring.dto.CancelScheduleDto;
 import com.demoairline.flightmonitoring.dto.FlightScheduleRequestDTO;
 import com.demoairline.flightmonitoring.dto.FlightScheduleUpdateRequest;
 import com.demoairline.flightmonitoring.dto.MessageResponseDto;
+import com.demoairline.flightmonitoring.dto.ScheduleResponseDto;
 import com.demoairline.flightmonitoring.entity.Airport;
 import com.demoairline.flightmonitoring.entity.Flight;
 import com.demoairline.flightmonitoring.entity.FlightSchedule;
@@ -24,6 +28,7 @@ import com.demoairline.flightmonitoring.entity.Runway;
 import com.demoairline.flightmonitoring.exception.AirportNotFoundException;
 import com.demoairline.flightmonitoring.exception.AirportRunwayNotFoundException;
 import com.demoairline.flightmonitoring.exception.FlightNotFoundException;
+import com.demoairline.flightmonitoring.exception.FlightScheduleAlreadyDeletedException;
 import com.demoairline.flightmonitoring.exception.FlightScheduleDateTimeException;
 import com.demoairline.flightmonitoring.exception.FlightScheduleNotFoundException;
 import com.demoairline.flightmonitoring.exception.NoRunwayAvailableException;
@@ -78,7 +83,7 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
 							flightSchedule.setRunwayID(runwayId);
 							flightSchedule.setScheduledDateTime(flightScheduleRequestDTO.getScheduledDateTime());
 							flightSchedule.setScheduleType(flightScheduleRequestDTO.getScheduleType());
-
+							flightSchedule.setScheduleStatus("SCHEDULED");
 							flightScheduleRepository.save(flightSchedule);
 
 							MessageResponseDto messageResponseDto = new MessageResponseDto();
@@ -175,13 +180,49 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
 			flightScheduleRepository.save(flightSchedule.get());
 			MessageResponseDto messageResponseDto = new MessageResponseDto();
 			messageResponseDto.setMessage("Flight Scheduled updated successfully");
-			messageResponseDto.setStatusCode(620L);
+			messageResponseDto.setStatusCode(628L);
 			log.info("Flight schedule updated successfully");
 			return messageResponseDto;
 
 		} else {
+			log.warn("No flight schedule found with schedule id" + flightScheduleRequestDTO.getScheduleId());
 			throw new FlightScheduleNotFoundException(flightScheduleRequestDTO.getScheduleId());
 		}
 	}
+	
+	@Override
+	public CancelScheduleDto cancelScheduleByScheduleId(Long ScheduleId) {
+		Optional<FlightSchedule> flightSchedule = flightScheduleRepository.findById(ScheduleId);
+		if (!flightSchedule.isPresent()) {
+			throw new FlightScheduleNotFoundException(ScheduleId);
+		}
+		if(flightSchedule.get().getScheduleStatus().equals("CANCLED"))
+		{
+			throw new FlightScheduleAlreadyDeletedException(ScheduleId);
+		}
+		flightSchedule.get().setScheduleStatus("CANCLED");
+		flightScheduleRepository.save(flightSchedule.get());
+		
+		CancelScheduleDto cancelScheduleDto = new CancelScheduleDto();
+		cancelScheduleDto.setMeassge(Constant.CancelSchedule);
+		cancelScheduleDto.setStatusCode(Constant.CancelCode);
+		return cancelScheduleDto;
+	
+	}
+
+	@Override
+	public List<ScheduleResponseDto> getFlightScheduleByFlightCode(String flightCode) {
+		List<FlightSchedule> listFlightSchedule = flightScheduleRepository.findAllByFlightCode(flightCode);
+		
+		List<ScheduleResponseDto> scheduleResponseDtos = listFlightSchedule.stream().map(schedule -> {
+			ScheduleResponseDto scheduleResponseDto = new ScheduleResponseDto();
+			BeanUtils.copyProperties(schedule, scheduleResponseDto);
+			return scheduleResponseDto;
+
+		}).collect(Collectors.toList());
+		return scheduleResponseDtos;
+	}
+	
+	
 
 }

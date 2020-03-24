@@ -48,12 +48,13 @@ public class FlightController {
 	 */
 
 	@GetMapping("")
-	public ResponseEntity<FlightsResponse> getFlights(@RequestParam Integer pageSize,
-			@RequestParam Integer pageNumber) {
+	public ResponseEntity<FlightsResponse> getFlights() {
 
 		logger.info("Fetching airlines details");
 
-		return new ResponseEntity<>(flightService.getFlights(pageSize, pageNumber), HttpStatus.OK);
+		return new ResponseEntity<>(flightService.getFlights(), HttpStatus.OK);
 	}
+
+
 
 }
