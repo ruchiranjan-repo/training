@@ -1,4 +1,9 @@
 package com.demoairline.flightmonitoring.entity;
+/**
+ * Entity class for Airline.
+ * 
+ * @author Ruchi
+ */
 
 import java.io.Serializable;
 

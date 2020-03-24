@@ -1,5 +1,9 @@
 package com.demoairline.flightmonitoring.entity;
-
+/**
+ * Entity class for FlightSchedule.
+ * 
+ * @author Ruchi
+ */
 import java.io.Serializable;
 import java.time.LocalDateTime;
 

@@ -1,5 +1,10 @@
 package com.demoairline.flightmonitoring.entity;
 
+/**
+ * Entity class for Runway.
+ * 
+ * @author Ruchi
+ */
 import java.io.Serializable;
 
 import javax.persistence.Column;

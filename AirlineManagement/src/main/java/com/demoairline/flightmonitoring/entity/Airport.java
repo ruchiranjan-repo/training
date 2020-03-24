@@ -1,4 +1,9 @@
 package com.demoairline.flightmonitoring.entity;
+/**
+ * Entity class for Airport.
+ * 
+ * @author Ruchi
+ */
 
 import java.io.Serializable;
 import java.util.ArrayList;
