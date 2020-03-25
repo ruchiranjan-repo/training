@@ -12,9 +12,10 @@ import com.demoairline.flightmonitoring.entity.FlightSchedule;
 @Repository
 public interface FlightScheduleRepository extends JpaRepository<FlightSchedule, Long> {
 
-	Optional<FlightSchedule> findByRunwayIDAndScheduledDateTime(Long runwayId, LocalDateTime scheduledDateTime);
-
 	Optional<FlightSchedule> findByScheduleId(Long scheduleId);
 
 	List<FlightSchedule> findAllByFlightCode(String flightCode);
+
+	Optional<FlightSchedule> findByRunwayIDAndScheduledDateTimeAndScheduleStatus(Long runwayId,
+			LocalDateTime scheduledDateTime, String scheduleStatus);
 }

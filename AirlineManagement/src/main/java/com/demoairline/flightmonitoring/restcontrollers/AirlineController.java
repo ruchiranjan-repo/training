@@ -27,9 +27,7 @@ public class AirlineController {
 
 	/**
 	 * 
-	 * @param pageSize
-	 * @param pageNumber
-	 * @throws AirLinesNotFoundException
+	 * 
 	 * @return All airlines details
 	 */
 	@GetMapping("")

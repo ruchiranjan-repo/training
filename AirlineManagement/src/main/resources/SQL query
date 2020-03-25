@@ -1,20 +1,14 @@
 SELECT * FROM AIRLINE 				
 				
-Insert into AIRLINE values(1,'INDIGO','AVAILABLE',1)				
-Insert into AIRLINE values(2,'AIR INDIA','AVAILABLE',2)				
+Insert into AIRLINE values(1,'INDIGO','AVAILABLE',1)	;			
+Insert into AIRLINE values(2,'AIR INDIA','AVAILABLE',2);				
 				
 select * from airport				
-insert into airport values(1,'AIRP01','Bangalore Airport','Domestic','Bangalore','2')				
-insert into airport values(2,'AIRP02','Chennai Airport','Domestic','Chennai','2')			
+insert into airport values(1,'AIRP01','Bangalore Airport','Domestic','Bangalore','2');				
+insert into airport values(2,'AIRP02','Chennai Airport','Domestic','Chennai','2');			
+insert into airport values(3,'AIRP03','Patna Airport','Domestic','Patna','2');			
+								
 				
-SELECT * FROM AIRLINE 				
-				
-Insert into AIRLINE values(1,'INDIGO','AVAILABLE',1)				
-Insert into AIRLINE values(2,'AIR INDIA','AVAILABLE',2)				
-				
-select * from airport				
-insert into airport values(1,'AIRP01','Bangalore Airport','Domestic','Bangalore','2')				
-insert into airport values(2,'AIRP02','Chennai Airport','Domestic','Chennai','2')				
 				
 select * from flight				
 insert into flight values(1,'INDIGO001','BLR-CHENNAI','AVAILABLE','DOMESTIC',80,1);				
@@ -22,13 +16,9 @@ insert into flight values(2,'INDIGO002','BLR-PAT','AVAILABLE','DOMESTIC',80,1);
 				
 insert into flight values(3,'AI001','BLR-CHENNAI','AVAILABLE','DOMESTIC',80,2);				
 				
-				
-				
-insert into runway values(1,'A','AVAILABLE',1)				
-insert into runway values(2,'B','AVAILABLE',1)				
-insert into runway values(3,'A','AVAILABLE',2)				
-
-
+			select * from FLIGHT_SCHEDULE 	
+			select * from RUNWAY 	
 insert into runway values(1,'A',1);				
 insert into runway values(2,'B',1);				
-insert into runway values(3,'A',2);			
+insert into runway values(3,'A',2);	
+insert into runway values(4,'C',1);				

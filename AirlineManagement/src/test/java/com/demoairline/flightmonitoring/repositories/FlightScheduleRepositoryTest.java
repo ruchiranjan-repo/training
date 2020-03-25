@@ -39,7 +39,7 @@ public class FlightScheduleRepositoryTest {
 	public void setUp()
 	{
 		airport= new Airport();
-		//airport.setAirportId(AIRPORT_ID);
+		
 		airport.setAirportCode(TestData.AIRPORT_CODE);
 		airport.setAirportName(TestData.AIRPORT_NAME);
 		airport.setAirportType(TestData.AIRPORT_TYPE);
@@ -47,14 +47,14 @@ public class FlightScheduleRepositoryTest {
 		airport.setNoOfRunways(10);
 		
 		runway= new Runway();
-		//runway.setRunwayID(RUNWAY_ID);
+		
 		runway.setRunway(TestData.RUNWAY_NAME);
 		List<Runway> runways= new ArrayList<>();
 		runways.add(runway);
 		airport.setRunways(runways);
 		
 		flight = new Flight();
-		//flight.setFlightId(FLIGHT_ID);
+	
 		flight.setFlightName(TestData.FLIGHT_NAME);
 		flight.setFlightCode(TestData.FLIGHT_CODE);
 		flight.setFlightStatus(TestData.FLIGHT_STATUS);
@@ -97,12 +97,12 @@ public class FlightScheduleRepositoryTest {
 	}
 	
 	@Test
-	public void testFindByRunwayIDAndScheduledDateTime()
+	public void testFindByRunwayIDAndScheduledDateTimeAndSchedule()
 	{
 		FlightSchedule persistedFlightSchedule= testEntityManager.persistAndFlush(flightSchedule);
 		
-		Optional<FlightSchedule> returnedFlightSchedule =flightScheduleRepository.findByRunwayIDAndScheduledDateTime(persistedFlightSchedule.getRunwayID(), persistedFlightSchedule.getScheduledDateTime());
 		
+		Optional<FlightSchedule> returnedFlightSchedule =flightScheduleRepository.findByRunwayIDAndScheduledDateTimeAndScheduleStatus(persistedFlightSchedule.getRunwayID(), persistedFlightSchedule.getScheduledDateTime(),"SCHEDULED");
 		assertThat(persistedFlightSchedule.getScheduleId()).isEqualTo(returnedFlightSchedule.get().getScheduleId());
 		assertThat(persistedFlightSchedule.getFlightCode()).isEqualTo(returnedFlightSchedule.get().getFlightCode());
 		assertThat(persistedFlightSchedule.getScheduledDateTime()).isEqualTo(returnedFlightSchedule.get().getScheduledDateTime());
@@ -114,12 +114,11 @@ public class FlightScheduleRepositoryTest {
 	{
 		FlightSchedule persistedFlightSchedule= testEntityManager.persistAndFlush(flightSchedule);
 		
-		Optional<FlightSchedule> returnedFlightSchedule =flightScheduleRepository.findByRunwayIDAndScheduledDateTime(11L, persistedFlightSchedule.getScheduledDateTime());
+		Optional<FlightSchedule> returnedFlightSchedule =flightScheduleRepository.findByRunwayIDAndScheduledDateTimeAndScheduleStatus(persistedFlightSchedule.getRunwayID(), persistedFlightSchedule.getScheduledDateTime(),"CANCLED");
 		
 		assertFalse(returnedFlightSchedule.isPresent());
 		
 	}
-//ist<FlightSchedule> findAllByFlightCode(String flightCode);
 	@Test
 	public void testfindAllByFlightCode()
 	{

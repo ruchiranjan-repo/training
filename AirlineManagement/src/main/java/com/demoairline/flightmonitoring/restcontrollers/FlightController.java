@@ -28,7 +28,7 @@ public class FlightController {
 
 	/**
 	 * 
-	 * @throws FlightNotFoundException
+	 *
 	 * @param flightId
 	 * @return flight details through flight Id
 	 */

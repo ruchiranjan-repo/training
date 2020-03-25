@@ -70,9 +70,9 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
 				if (!CollectionUtils.isEmpty(runways)) {
 
 					for (Runway runway : runways) {
-						Optional<FlightSchedule> scheduledFlightForRunwayAndDateTime = flightScheduleRepository
-								.findByRunwayIDAndScheduledDateTime(runway.getRunwayID(),
-										flightScheduleRequestDTO.getScheduledDateTime());
+						
+						Optional<FlightSchedule> scheduledFlightForRunwayAndDateTime=flightScheduleRepository.findByRunwayIDAndScheduledDateTimeAndScheduleStatus(runway.getRunwayID(),
+								  flightScheduleRequestDTO.getScheduledDateTime(),"SCHEDULED");
 						if (!scheduledFlightForRunwayAndDateTime.isPresent()) {
 							Long runwayId = runway.getRunwayID();
 
@@ -141,9 +141,14 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
 						for (Runway runway : airport.getRunways()) {
 							if (flightScheduleRequestDTO.getRunwayId() == runway.getRunwayID()) {
 								isRunwayFound = true;
-								Optional<FlightSchedule> scheduledFlightForRunwayAndDateTime = flightScheduleRepository
-										.findByRunwayIDAndScheduledDateTime(flightScheduleRequestDTO.getRunwayId(),
-												flightSchedule.get().getScheduledDateTime());
+								/*
+								 * Optional<FlightSchedule> scheduledFlightForRunwayAndDateTime =
+								 * flightScheduleRepository
+								 * .findByRunwayIDAndScheduledDateTime(flightScheduleRequestDTO.getRunwayId(),
+								 * flightSchedule.get().getScheduledDateTime());
+								 */
+								Optional<FlightSchedule> scheduledFlightForRunwayAndDateTime=flightScheduleRepository.findByRunwayIDAndScheduledDateTimeAndScheduleStatus(flightScheduleRequestDTO.getRunwayId(),
+										  flightSchedule.get().getScheduledDateTime(),"SCHEDULED");
 
 								if (!scheduledFlightForRunwayAndDateTime.isPresent()) {
 

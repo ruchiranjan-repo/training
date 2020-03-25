@@ -96,7 +96,7 @@ public class FlightScheduleServiceTest {
 
 		when(airportRepository.findByAirportId(TestData.AIRPORT_ID)).thenReturn(Optional.of(airport));
 
-		when(flightScheduleRepository.findByRunwayIDAndScheduledDateTime(TestData.RUNWAY_ID, FUTURE_DATE_TIME))
+		when(flightScheduleRepository.findByRunwayIDAndScheduledDateTimeAndScheduleStatus(TestData.RUNWAY_ID, FUTURE_DATE_TIME,"SCHEDULED"))
 				.thenReturn(Optional.empty());
 
 		when(flightScheduleRepository.save(flightSchedule)).thenReturn(flightSchedule);
@@ -176,11 +176,10 @@ public class FlightScheduleServiceTest {
 
 		when(flightScheduleRepository.findByScheduleId(1000L)).thenReturn(Optional.of(flightSchedule));
 
-		when(flightScheduleRepository.findByRunwayIDAndScheduledDateTime(TestData.RUNWAY_ID, FUTURE_DATE_TIME))
-				.thenReturn(Optional.of(flightSchedule));
-
-		when(flightScheduleRepository.findByRunwayIDAndScheduledDateTime(TestData.RUNWAY_ID, FUTURE_DATE_TIME))
+		when(flightScheduleRepository.findByRunwayIDAndScheduledDateTimeAndScheduleStatus(TestData.RUNWAY_ID, FUTURE_DATE_TIME,"SCHEDULED"))
 				.thenReturn(Optional.empty());
+
+		
 
 		when(flightScheduleRepository.save(flightSchedule)).thenReturn(flightSchedule);
 
@@ -270,7 +269,7 @@ public class FlightScheduleServiceTest {
 
 		when(flightScheduleRepository.findByScheduleId(1000L)).thenReturn(Optional.of(flightSchedule));
 
-		when(flightScheduleRepository.findByRunwayIDAndScheduledDateTime(TestData.RUNWAY_ID, FUTURE_DATE_TIME))
+		when(flightScheduleRepository.findByRunwayIDAndScheduledDateTimeAndScheduleStatus(TestData.RUNWAY_ID, FUTURE_DATE_TIME,"SCHEDULED"))
 				.thenReturn(Optional.of(flightSchedule));
 
 		FlightScheduleUpdateRequest flightScheduleRequestDTO = new FlightScheduleUpdateRequest();
