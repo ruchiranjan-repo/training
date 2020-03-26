@@ -1,14 +1,19 @@
 package com.demoairline.flightmonitoring.dto;
 
 import java.time.LocalDateTime;
+
+import javax.validation.constraints.NotNull;
+
 /**
- * Request claass for adding flight schedule.
+ * Request claas for adding flight schedule.
  * 
  * @author Ruchi
  */
 public class FlightScheduleRequestDTO {
 
+	@NotNull(message = "flight id required")
 	private Long flightId;
+	@NotNull(message = "airoplane id required")
 	private Long airportId;
 	private LocalDateTime scheduledDateTime;
 	private String scheduleType;

@@ -3,7 +3,7 @@ package com.demoairline.flightmonitoring.services;
 import java.time.LocalDateTime;
 /**
  * Implementation for Flight schedule service.
- * @author Ruchi
+ * @author Ruchi and GuruchandruV 
  */
 import java.util.List;
 import java.util.Optional;
@@ -70,9 +70,10 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
 				if (!CollectionUtils.isEmpty(runways)) {
 
 					for (Runway runway : runways) {
-						
-						Optional<FlightSchedule> scheduledFlightForRunwayAndDateTime=flightScheduleRepository.findByRunwayIDAndScheduledDateTimeAndScheduleStatus(runway.getRunwayID(),
-								  flightScheduleRequestDTO.getScheduledDateTime(),"SCHEDULED");
+
+						Optional<FlightSchedule> scheduledFlightForRunwayAndDateTime = flightScheduleRepository
+								.findByRunwayIDAndScheduledDateTimeAndScheduleStatus(runway.getRunwayID(),
+										flightScheduleRequestDTO.getScheduledDateTime(), "SCHEDULED");
 						if (!scheduledFlightForRunwayAndDateTime.isPresent()) {
 							Long runwayId = runway.getRunwayID();
 
@@ -139,25 +140,22 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
 
 						boolean isRunwayFound = false;
 						for (Runway runway : airport.getRunways()) {
-							if (flightScheduleRequestDTO.getRunwayId() == runway.getRunwayID()) {
+							if (flightScheduleRequestDTO.getRunwayId().equals(runway.getRunwayID())) {
 								isRunwayFound = true;
-								/*
-								 * Optional<FlightSchedule> scheduledFlightForRunwayAndDateTime =
-								 * flightScheduleRepository
-								 * .findByRunwayIDAndScheduledDateTime(flightScheduleRequestDTO.getRunwayId(),
-								 * flightSchedule.get().getScheduledDateTime());
-								 */
-								Optional<FlightSchedule> scheduledFlightForRunwayAndDateTime=flightScheduleRepository.findByRunwayIDAndScheduledDateTimeAndScheduleStatus(flightScheduleRequestDTO.getRunwayId(),
-										  flightSchedule.get().getScheduledDateTime(),"SCHEDULED");
+								Optional<FlightSchedule> scheduledFlightForRunwayAndDateTime = flightScheduleRepository
+										.findByRunwayIDAndScheduledDateTimeAndScheduleStatus(
+												flightScheduleRequestDTO.getRunwayId(),
+												flightSchedule.get().getScheduledDateTime(), "SCHEDULED");
 
 								if (!scheduledFlightForRunwayAndDateTime.isPresent()) {
 
 									flightSchedule.get().setRunwayID(flightScheduleRequestDTO.getRunwayId());
 
 								} else {
-									log.warn("Provided runway is not available to schedule the takoff or landing of the flight "
-											+ flightSchedule.get().getFlight().getFlightId() + " on airport  "
-											+ flightSchedule.get().getAirport().getAirportId());
+									log.warn(
+											"Provided runway is not available to schedule the takoff or landing of the flight "
+													+ flightSchedule.get().getFlight().getFlightId() + " on airport  "
+													+ flightSchedule.get().getAirport().getAirportId());
 									throw new NoRunwayAvailableException(flightSchedule.get().getFlight().getFlightId(),
 											flightSchedule.get().getAirport().getAirportId());
 								}
@@ -165,7 +163,7 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
 
 						}
 
-						if (isRunwayFound == false) {
+						if (!isRunwayFound) {
 							log.warn("Runway with runwayId "
 									+ (flightScheduleRequestDTO.getRunwayId() + " is not available on airport id "
 											+ flightSchedule.get().getAirport().getAirportId()));
@@ -194,40 +192,54 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
 			throw new FlightScheduleNotFoundException(flightScheduleRequestDTO.getScheduleId());
 		}
 	}
-	
-	@Override
-	public CancelScheduleDto cancelScheduleByScheduleId(Long ScheduleId) {
-		Optional<FlightSchedule> flightSchedule = flightScheduleRepository.findById(ScheduleId);
+
+	/**
+	 * @author GuruchandruV
+	 * 
+	 *         Method is used to cancel scheduled flight by using flight id
+	 * 
+	 * @throws FlightScheduleNotFoundException
+	 */
+	public CancelScheduleDto cancelScheduleByScheduleId(Long scheduleId) {
+		Optional<FlightSchedule> flightSchedule = flightScheduleRepository.findById(scheduleId);
 		if (!flightSchedule.isPresent()) {
-			throw new FlightScheduleNotFoundException(ScheduleId);
+			throw new FlightScheduleNotFoundException(scheduleId);
 		}
-		if(flightSchedule.get().getScheduleStatus().equals("CANCLED"))
-		{
-			throw new FlightScheduleAlreadyDeletedException(ScheduleId);
+		if (flightSchedule.get().getScheduleStatus().equals("CANCLED")) {
+			throw new FlightScheduleAlreadyDeletedException(scheduleId);
 		}
 		flightSchedule.get().setScheduleStatus("CANCLED");
 		flightScheduleRepository.save(flightSchedule.get());
-		
+
 		CancelScheduleDto cancelScheduleDto = new CancelScheduleDto();
-		cancelScheduleDto.setMeassge(Constant.CancelSchedule);
-		cancelScheduleDto.setStatusCode(Constant.CancelCode);
+		cancelScheduleDto.setMeassge(Constant.cancelSchedule);
+		cancelScheduleDto.setStatusCode(Constant.cancelCode);
 		return cancelScheduleDto;
-	
+		
 	}
 
-	@Override
+	/**
+	 * @author GuruchandruV
+	 * 
+	 *         Method is used to get flight scheduled flight by using flight id
+	 * 
+	 * @throws FlightScheduleNotFoundException
+	 */
 	public List<ScheduleResponseDto> getFlightScheduleByFlightCode(String flightCode) {
 		List<FlightSchedule> listFlightSchedule = flightScheduleRepository.findAllByFlightCode(flightCode);
-		
-		List<ScheduleResponseDto> scheduleResponseDtos = listFlightSchedule.stream().map(schedule -> {
+
+		if (listFlightSchedule.isEmpty()) {
+			throw new FlightScheduleNotFoundException(00l);
+		}
+
+		return listFlightSchedule.stream().map(schedule -> {
 			ScheduleResponseDto scheduleResponseDto = new ScheduleResponseDto();
 			BeanUtils.copyProperties(schedule, scheduleResponseDto);
 			return scheduleResponseDto;
-
 		}).collect(Collectors.toList());
-		return scheduleResponseDtos;
-	}
-	
-	
 
+	}
+
+	
+	
 }

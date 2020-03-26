@@ -16,21 +16,18 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="Runway")
+@Table(name = "runway")
 public class Runway implements Serializable {
-	
 
 	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)	
-	private Long runwayID;
-	
-	@Column(name="runway")
-	@NotNull
-	private String runway;
-	
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long runwayID;
+
+	@Column(name = "runwa_number")
+	@NotNull
+	private String runwayNumber;
 
 	public Long getRunwayID() {
 		return runwayID;
@@ -40,14 +37,16 @@ public class Runway implements Serializable {
 		this.runwayID = runwayID;
 	}
 
-	public String getRunway() {
-		return runway;
+	public String getRunwayNumber() {
+		return runwayNumber;
 	}
 
-	public void setRunway(String runway) {
-		this.runway = runway;
+	public void setRunwayNumber(String runwayNumber) {
+		this.runwayNumber = runwayNumber;
 	}
 
-	
-	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 }

@@ -1,6 +1,7 @@
 package com.demoairline.flightmonitoring.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -16,9 +18,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import com.demoairline.flightmonitoring.dto.AirLineResponse;
 import com.demoairline.flightmonitoring.dto.AirLinesResponse;
 import com.demoairline.flightmonitoring.entity.Airline;
+import com.demoairline.flightmonitoring.exception.AirLineNotFoundException;
+import com.demoairline.flightmonitoring.exception.AirLinesNotFoundException;
 import com.demoairline.flightmonitoring.repositories.AirlineRepository;
-
-
 
 @SpringBootTest
 public class AirlineServiceTest {
@@ -49,7 +51,11 @@ public class AirlineServiceTest {
 		airline1.setRegistrationNumber("321");
 
 	}
-
+	/**
+	 * Method is used to test fetching the airline by using airline id.
+	 * 
+	 * @throws AirLineNotFoundException
+	 */
 	@Test
 	public void getAirlineByAirlineIdTest() {
 
@@ -65,6 +71,11 @@ public class AirlineServiceTest {
 
 	}
 
+	/**
+	 * Method is used to test fetch the airlines.
+	 * 
+	 * @throws AirLinesNotFoundException
+	 */
 	@Test
 	public void getAllAirLinesTest() {
 
@@ -80,6 +91,33 @@ public class AirlineServiceTest {
 
 		assertEquals(airLineResponse.getAirlines(), airLinesResponse.getAirlines());
 
+	}
+	/**
+	 * Method is used to test if the airline not found.
+	 * 
+	 * @throws AirLineNotFoundException
+	 */
+	@Test
+	public void testAirlineNotFoundException() {
+
+		Mockito.when(airlineRepository.findById(1l)).thenReturn(Optional.empty());
+		assertThrows(AirLineNotFoundException.class, () -> {
+			airlineServiceImpl.getAirlinesByAirlinId(1l);
+		});
+	}
+	/**
+	 * Method is used to test if the airlines not found.
+	 * 
+	 * @throws AirLinesNotFoundException
+	 */
+	@Test
+	public void testAirlinesNotFoundException() {
+		List<Airline> airlines = new ArrayList<Airline>();
+
+		Mockito.when(airlineRepository.findAll()).thenReturn(airlines);
+		assertThrows(AirLinesNotFoundException.class, () -> {
+			airlineServiceImpl.getAirlines();
+		});
 	}
 
 }

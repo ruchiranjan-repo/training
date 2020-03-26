@@ -1,5 +1,10 @@
 package com.demoairline.flightmonitoring.dto;
 
+/**
+ * Response class for fetching flight details.
+ * 
+ * @author YaseenShaik
+ */
 import com.demoairline.flightmonitoring.entity.Flight;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

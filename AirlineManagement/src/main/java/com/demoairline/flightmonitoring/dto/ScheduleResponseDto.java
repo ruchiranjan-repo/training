@@ -1,7 +1,11 @@
 package com.demoairline.flightmonitoring.dto;
 
 import java.time.LocalDateTime;
-
+/**
+ * Sending ScheduleResponse to the client
+ * @author Guruchandru 
+ *
+ */
 public class ScheduleResponseDto {
 
 	private Long scheduleId;

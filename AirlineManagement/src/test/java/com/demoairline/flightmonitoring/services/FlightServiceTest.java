@@ -1,6 +1,7 @@
 package com.demoairline.flightmonitoring.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -17,8 +19,9 @@ import com.demoairline.flightmonitoring.dto.FlightResponse;
 import com.demoairline.flightmonitoring.dto.FlightsResponse;
 import com.demoairline.flightmonitoring.entity.Airline;
 import com.demoairline.flightmonitoring.entity.Flight;
+import com.demoairline.flightmonitoring.exception.FlightNotFoundException;
+import com.demoairline.flightmonitoring.exception.FlightsNotFoundException;
 import com.demoairline.flightmonitoring.repositories.FlightRepository;
-
 
 @SpringBootTest
 public class FlightServiceTest {
@@ -55,6 +58,11 @@ public class FlightServiceTest {
 
 	}
 
+	/**
+	 * Method is used to test by fetch the flight by using flight id.
+	 * 
+	 * @throws FlightNotFoundException
+	 */
 	@Test
 	public void getAirlineByAirlineIdTest() {
 
@@ -70,8 +78,13 @@ public class FlightServiceTest {
 
 	}
 
+	/**
+	 * Method is used to test by fetch the flights.
+	 * 
+	 * @throws FlightsNotFoundException
+	 */
 	@Test
-	public void getAllAirLinesTest() {
+	public void getAllFlightsTest() {
 
 		List<Flight> flights = new ArrayList<Flight>();
 		flights.add(flight);
@@ -81,8 +94,37 @@ public class FlightServiceTest {
 
 		FlightsResponse flightResponse = flightServiceImpl.getFlights();
 
-		assertEquals(flightResponse.getFlights().size(), 2);
+		assertEquals(2, flightResponse.getFlights().size());
 
+	}
+
+	/**
+	 * Method is used to test by flights not found.
+	 * 
+	 * @throws FlightsNotFoundException
+	 */
+	@Test
+	public void TestFlightNotFoundException() {
+
+		Mockito.when(flightRepository.findByFlightId(1l)).thenReturn(Optional.empty());
+		assertThrows(FlightNotFoundException.class, () -> {
+			flightServiceImpl.getFlightByFlightId(1l);
+		});
+	}
+
+	/**
+	 * Method is used to test flight not found.
+	 * 
+	 * @throws FlightNotFoundException
+	 */
+	@Test
+	public void TestFlightsNotFoundException() {
+		List<Flight> flights = new ArrayList<Flight>();
+
+		Mockito.when(flightRepository.findAll()).thenReturn(flights);
+		assertThrows(FlightsNotFoundException.class, () -> {
+			flightServiceImpl.getFlights();
+		});
 	}
 
 }

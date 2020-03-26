@@ -1,6 +1,7 @@
 package com.demoairline.flightmonitoring.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
@@ -11,14 +12,18 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.demoairline.flightmonitoring.TestData;
+import com.demoairline.flightmonitoring.dto.CancelScheduleDto;
 import com.demoairline.flightmonitoring.dto.FlightScheduleRequestDTO;
 import com.demoairline.flightmonitoring.dto.FlightScheduleUpdateRequest;
 import com.demoairline.flightmonitoring.dto.MessageResponseDto;
+import com.demoairline.flightmonitoring.dto.ScheduleResponseDto;
+import com.demoairline.flightmonitoring.entity.Airline;
 import com.demoairline.flightmonitoring.entity.Airport;
 import com.demoairline.flightmonitoring.entity.Flight;
 import com.demoairline.flightmonitoring.entity.FlightSchedule;
@@ -32,12 +37,15 @@ import com.demoairline.flightmonitoring.exception.NoRunwayAvailableException;
 import com.demoairline.flightmonitoring.repositories.Airportrepository;
 import com.demoairline.flightmonitoring.repositories.FlightRepository;
 import com.demoairline.flightmonitoring.repositories.FlightScheduleRepository;
+import com.demoairline.flightmonitoring.repositories.RunwayRepository;
 
 @SpringBootTest
 public class FlightScheduleServiceTest {
 
 	@Autowired
 	FlightScheduleService flightScheduleService;
+	@Autowired
+	FlightScheduleServiceImpl flightScheduleServiceImpl;
 
 	@MockBean
 	FlightScheduleRepository flightScheduleRepository;
@@ -45,6 +53,9 @@ public class FlightScheduleServiceTest {
 	FlightRepository flightRepository;
 	@MockBean
 	Airportrepository airportRepository;
+	
+	@MockBean
+	RunwayRepository runwayRepository;
 
 	FlightSchedule flightSchedule;
 	Airport airport;
@@ -66,7 +77,7 @@ public class FlightScheduleServiceTest {
 
 		runway = new Runway();
 		runway.setRunwayID(TestData.RUNWAY_ID);
-		runway.setRunway(TestData.RUNWAY_NAME);
+		runway.setRunwayNumber(TestData.RUNWAY_NAME);
 		List<Runway> runways = new ArrayList<>();
 		runways.add(runway);
 		airport.setRunways(runways);
@@ -96,8 +107,8 @@ public class FlightScheduleServiceTest {
 
 		when(airportRepository.findByAirportId(TestData.AIRPORT_ID)).thenReturn(Optional.of(airport));
 
-		when(flightScheduleRepository.findByRunwayIDAndScheduledDateTimeAndScheduleStatus(TestData.RUNWAY_ID, FUTURE_DATE_TIME,"SCHEDULED"))
-				.thenReturn(Optional.empty());
+		when(flightScheduleRepository.findByRunwayIDAndScheduledDateTimeAndScheduleStatus(TestData.RUNWAY_ID,
+				FUTURE_DATE_TIME, "SCHEDULED")).thenReturn(Optional.empty());
 
 		when(flightScheduleRepository.save(flightSchedule)).thenReturn(flightSchedule);
 		FlightScheduleRequestDTO flightScheduleRequestDTO = new FlightScheduleRequestDTO();
@@ -176,10 +187,8 @@ public class FlightScheduleServiceTest {
 
 		when(flightScheduleRepository.findByScheduleId(1000L)).thenReturn(Optional.of(flightSchedule));
 
-		when(flightScheduleRepository.findByRunwayIDAndScheduledDateTimeAndScheduleStatus(TestData.RUNWAY_ID, FUTURE_DATE_TIME,"SCHEDULED"))
-				.thenReturn(Optional.empty());
-
-		
+		when(flightScheduleRepository.findByRunwayIDAndScheduledDateTimeAndScheduleStatus(TestData.RUNWAY_ID,
+				FUTURE_DATE_TIME, "SCHEDULED")).thenReturn(Optional.empty());
 
 		when(flightScheduleRepository.save(flightSchedule)).thenReturn(flightSchedule);
 
@@ -198,8 +207,6 @@ public class FlightScheduleServiceTest {
 
 		when(flightScheduleRepository.findByScheduleId(1000L)).thenReturn(Optional.empty());
 
-		
-
 		FlightScheduleUpdateRequest flightScheduleRequestDTO = new FlightScheduleUpdateRequest();
 		flightScheduleRequestDTO.setRunwayId(TestData.RUNWAY_ID);
 		flightScheduleRequestDTO.setScheduleId(1000L);
@@ -215,7 +222,6 @@ public class FlightScheduleServiceTest {
 	public void testUpdateFlightScheduleThrowsFlightScheduleDateTimeException() {
 
 		when(flightScheduleRepository.findByScheduleId(1000L)).thenReturn(Optional.of(flightSchedule));
-
 
 		FlightScheduleUpdateRequest flightScheduleRequestDTO = new FlightScheduleUpdateRequest();
 		flightScheduleRequestDTO.setRunwayId(TestData.RUNWAY_ID);
@@ -234,8 +240,6 @@ public class FlightScheduleServiceTest {
 
 		when(flightScheduleRepository.findByScheduleId(1000L)).thenReturn(Optional.of(flightSchedule));
 
-		
-
 		FlightScheduleUpdateRequest flightScheduleRequestDTO = new FlightScheduleUpdateRequest();
 		flightScheduleRequestDTO.setRunwayId(TestData.RUNWAY_ID);
 		flightScheduleRequestDTO.setScheduleId(1000L);
@@ -251,7 +255,6 @@ public class FlightScheduleServiceTest {
 	public void testUpdateFlightScheduleThrowsAirportRunwayNotFound() {
 
 		when(flightScheduleRepository.findByScheduleId(1000L)).thenReturn(Optional.of(flightSchedule));
-
 
 		FlightScheduleUpdateRequest flightScheduleRequestDTO = new FlightScheduleUpdateRequest();
 		flightScheduleRequestDTO.setRunwayId(RUNWAY_ID_NOT_FOUND);
@@ -269,8 +272,8 @@ public class FlightScheduleServiceTest {
 
 		when(flightScheduleRepository.findByScheduleId(1000L)).thenReturn(Optional.of(flightSchedule));
 
-		when(flightScheduleRepository.findByRunwayIDAndScheduledDateTimeAndScheduleStatus(TestData.RUNWAY_ID, FUTURE_DATE_TIME,"SCHEDULED"))
-				.thenReturn(Optional.of(flightSchedule));
+		when(flightScheduleRepository.findByRunwayIDAndScheduledDateTimeAndScheduleStatus(TestData.RUNWAY_ID,
+				FUTURE_DATE_TIME, "SCHEDULED")).thenReturn(Optional.of(flightSchedule));
 
 		FlightScheduleUpdateRequest flightScheduleRequestDTO = new FlightScheduleUpdateRequest();
 		flightScheduleRequestDTO.setRunwayId(TestData.RUNWAY_ID);
@@ -282,8 +285,60 @@ public class FlightScheduleServiceTest {
 		});
 
 	}
+
+	@Test
+	public void getFlightSchedule() {
+
+		List<FlightSchedule> flightSchedules = new ArrayList<FlightSchedule>();
+		flightSchedules.add(flightSchedule);
+
+		when(flightScheduleRepository.findAllByFlightCode(TestData.FLIGHT_CODE)).thenReturn(flightSchedules);
+
+		List<ScheduleResponseDto> scheduleResponseDto = flightScheduleService
+				.getFlightScheduleByFlightCode(TestData.FLIGHT_CODE);
+
+		assertEquals(1, scheduleResponseDto.size());
+
+	}
+
+	@Test
+	public void getFlightScheduleNotFoundTest() {
+
+		List<FlightSchedule> flightSchedules = new ArrayList<FlightSchedule>();
+
+		when(flightScheduleRepository.findAllByFlightCode(TestData.FLIGHT_CODE)).thenReturn(flightSchedules);
+
+		assertThrows(FlightScheduleNotFoundException.class, () -> {
+			flightScheduleService.getFlightScheduleByFlightCode(TestData.FLIGHT_CODE);
+		});
+
+	}
 	
-	
-	
+	@Test	
+	public void testFlightScheduleCancel() 
+	{
+		FlightSchedule schedule=new FlightSchedule();
+		schedule.setScheduleId(1000L);
+		schedule.setRunwayID(1234L);
+		schedule.setScheduleStatus("available");
+		schedule.setScheduleType("Arrival");
+		Flight flight=new Flight();
+		flight.setFlightId(1L);
+		flight.setFlightName("abc");
+		Airline airline=new Airline();
+		airline.setAirlineId(1L);
+		schedule.setRunwayID(1L);
+		Runway runway=new Runway();
+		runway.setRunwayID(1L);
+		Airport airport=new Airport();
+		airport.setAirportId(1L);
+		Mockito.when(flightScheduleRepository.findById(1000L)).thenReturn(Optional.of(schedule));
+		Mockito.when(runwayRepository.findById(1L)).thenReturn(Optional.of(runway));
+		CancelScheduleDto response= flightScheduleServiceImpl.cancelScheduleByScheduleId(1000L);
+		assertEquals("The Schedule flight is being canceled", response.getMeassge());
+		
+		
+		
+	}
 
 }

@@ -1,5 +1,10 @@
 package com.demoairline.flightmonitoring.dto;
 
+/**
+ * Response class for fetching airlines details.
+ * 
+ * @author YaseenShaik
+ */
 import java.util.List;
 
 import com.demoairline.flightmonitoring.entity.Airline;

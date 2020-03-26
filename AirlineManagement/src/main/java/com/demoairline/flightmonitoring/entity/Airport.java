@@ -16,45 +16,43 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="Airport")
-public class Airport implements Serializable{
-	
+@Table(name = "airport")
+public class Airport implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long airportId;
-	
-	@Column(name="airport_name")
+
+	@Column(name = "airport_name")
 	@NotNull
 	private String airportName;
-	
-	@Column(name="airport_code")
+
+	@Column(name = "airport_code")
 	@NotNull
 	private String airportCode;
-	
-	@Column(name="location")
+
+	@Column(name = "location")
 	@NotNull
 	private String location;
-	
-	@Column(name="no_of_runways")
+
+	@Column(name = "no_of_runways")
 	@NotNull
 	private Integer noOfRunways;
-	
-	@Column(name="airport_type")
+
+	@Column(name = "airport_type")
 	@NotNull
 	private String airportType;
-	
-	@OneToMany(cascade= CascadeType.ALL)
-	@JoinColumn(name="airportId")
-	List<Runway> runways= new ArrayList<Runway>();
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "airportId")
+	transient List<Runway> runways = new ArrayList<>();
 
 	public Long getAirportId() {
 		return airportId;
@@ -111,9 +109,5 @@ public class Airport implements Serializable{
 	public void setRunways(List<Runway> runways) {
 		this.runways = runways;
 	}
-
-	
-	
-	
 
 }

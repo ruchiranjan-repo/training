@@ -1,5 +1,9 @@
 package com.demoairline.flightmonitoring.services;
 
+/**
+ * Implementation for Flight service Implementation.
+ * @author YaseenShaik
+ */
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -8,17 +12,15 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.demoairline.flightmonitoring.dto.FlightDto;
+import com.demoairline.flightmonitoring.dto.FlightResponse;
+import com.demoairline.flightmonitoring.dto.FlightsResponse;
 import com.demoairline.flightmonitoring.entity.Flight;
 import com.demoairline.flightmonitoring.exception.FlightNotFoundException;
 import com.demoairline.flightmonitoring.exception.FlightsNotFoundException;
 import com.demoairline.flightmonitoring.repositories.FlightRepository;
-import com.demoairline.flightmonitoring.dto.FlightResponse;
-import com.demoairline.flightmonitoring.dto.FlightsResponse;
 
 @Service
 @Transactional
@@ -27,6 +29,11 @@ public class FlightServiceImpl implements FlightService {
 	@Autowired
 	private FlightRepository flightRepository;
 
+	/**
+	 * Method is used to fetch the flight by using flight id.
+	 * 
+	 * @throws FlightNotFoundException
+	 */
 	public FlightResponse getFlightByFlightId(Long flightId) {
 
 		Optional<Flight> flight = flightRepository.findById(flightId);
@@ -35,15 +42,15 @@ public class FlightServiceImpl implements FlightService {
 			throw new FlightNotFoundException(flightId);
 		}
 
-		FlightResponse flightResponse = new FlightResponse(flight.get(), 666);
-
-		return flightResponse;
+		return new FlightResponse(flight.get(), 666);
 	}
 
+	/**
+	 * Method is used to fetch the flights.
+	 * 
+	 * @throws FlightsNotFoundException
+	 */
 	public FlightsResponse getFlights() {
-
-	
-
 		List<Flight> flights = flightRepository.findAll();
 
 		if (flights.isEmpty()) {
@@ -55,9 +62,8 @@ public class FlightServiceImpl implements FlightService {
 			BeanUtils.copyProperties(flight, flightDto);
 			return flightDto;
 		}).collect(Collectors.toList());
-		FlightsResponse flightsResponse = new FlightsResponse(flightDtos, flights.size());
 
-		return flightsResponse;
+		return new FlightsResponse(flightDtos, flights.size());
 	}
 
 }

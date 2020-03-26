@@ -1,5 +1,8 @@
 package com.demoairline.flightmonitoring.dto;
-
+/**
+ *  Sending Flight data through data transform object
+ * @author Guruchandru
+ */
 import com.demoairline.flightmonitoring.entity.Airline;
 
 public class FlightDto {

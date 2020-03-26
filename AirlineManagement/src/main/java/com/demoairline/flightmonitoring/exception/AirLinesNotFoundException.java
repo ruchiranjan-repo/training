@@ -1,4 +1,10 @@
 package com.demoairline.flightmonitoring.exception;
+/**
+ * Exception class to be used when Airlines are not available.
+ * 
+ * @author YaseenShaik
+ *
+ */
 
 public class AirLinesNotFoundException extends RuntimeException {
 

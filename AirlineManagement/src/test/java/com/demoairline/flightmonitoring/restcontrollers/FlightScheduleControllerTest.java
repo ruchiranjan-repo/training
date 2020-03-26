@@ -1,16 +1,15 @@
-package  com.demoairline.flightmonitoring.restcontrollers;
+package com.demoairline.flightmonitoring.restcontrollers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -22,18 +21,15 @@ import com.demoairline.flightmonitoring.dto.ScheduleResponseDto;
 import com.demoairline.flightmonitoring.entity.FlightSchedule;
 import com.demoairline.flightmonitoring.services.FlightScheduleService;
 
-
-@RunWith(MockitoJUnitRunner.class)
+@SpringBootTest
 public class FlightScheduleControllerTest {
 	@Mock
 	private FlightScheduleService flightScheduleService;
 	@InjectMocks
 	private FlightScheduleRestController flightScheduleController;
 
-
-	
 	@Test
-	public void tesCancelSchedule()  {
+	public void tesCancelSchedule() {
 		FlightSchedule schedule = new FlightSchedule();
 		schedule.setScheduleId(1000L);
 		schedule.setRunwayID(1234L);
@@ -48,9 +44,8 @@ public class FlightScheduleControllerTest {
 
 	}
 
-
 	@Test
-	public void testFlightScheduleByFlightCode(){
+	public void testFlightScheduleByFlightCode() {
 		FlightSchedule flightSchedule = new FlightSchedule();
 		flightSchedule.setFlightCode("fhf");
 		ScheduleResponseDto scheduleResponseDto = new ScheduleResponseDto();
@@ -61,9 +56,10 @@ public class FlightScheduleControllerTest {
 		List<ScheduleResponseDto> Listschedule = new ArrayList<ScheduleResponseDto>();
 		Listschedule.add(scheduleResponseDto);
 		Mockito.when(flightScheduleService.getFlightScheduleByFlightCode("fhf")).thenReturn(Listschedule);
-		ResponseEntity<List<ScheduleResponseDto>>response=flightScheduleController.getScheduleByFlightCode("fhf");
+		ResponseEntity<List<ScheduleResponseDto>> response = flightScheduleController.getScheduleByFlightCode("fhf");
 		assertEquals(Listschedule.size(), response.getBody().size());
 	}
+
 	@Test
 	public void testAddFlightSchedule() {
 		FlightScheduleRequestDTO flightScheduleRequestDTO = new FlightScheduleRequestDTO();
@@ -74,7 +70,7 @@ public class FlightScheduleControllerTest {
 		messageResponseDto.setMessage("add flight successfully");
 		Mockito.when(flightScheduleService.addFlightSchedule(flightScheduleRequestDTO)).thenReturn(messageResponseDto);
 		ResponseEntity<Object> response = flightScheduleController.addFlightSchedule(flightScheduleRequestDTO);
-		assertEquals(response.getStatusCode(), HttpStatus.CREATED);
+		assertEquals(HttpStatus.CREATED, response.getStatusCode());
 
 	}
 
@@ -90,7 +86,7 @@ public class FlightScheduleControllerTest {
 		Mockito.when(flightScheduleService.updateFlightSchedule(flightScheduleRequestDTO))
 				.thenReturn(messageResponseDto);
 		ResponseEntity<Object> response = flightScheduleController.updateFlightSchedule(flightScheduleRequestDTO);
-		assertEquals(response.getStatusCode(), HttpStatus.OK);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
 
 	}
 }
