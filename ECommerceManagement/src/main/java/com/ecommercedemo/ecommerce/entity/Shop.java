@@ -71,6 +71,12 @@ public class Shop implements Serializable{
 	public void setShopAverageRating(Double shopAverageRating) {
 		this.shopAverageRating = shopAverageRating;
 	}
+
+	@Override
+	public String toString() {
+		return "Shop [shopId=" + shopId + ", shopName=" + shopName + ", shopLocation=" + shopLocation
+				+ ", shopDescription=" + shopDescription + ", shopAverageRating=" + shopAverageRating + "]";
+	}
 	
 	
 
