@@ -2,7 +2,7 @@ package com.demoairline.flightmonitoring.entity;
 /**
  * Entity class for Flight.
  * 
- * @author YaseenShaik
+ * @author Ruchi
  */
 
 import java.io.Serializable;
@@ -18,7 +18,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="alight")
+@Table(name="Flight")
 public class Flight implements Serializable {
 	
 

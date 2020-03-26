@@ -1,10 +1,5 @@
 package com.demoairline.flightmonitoring.exception;
-/**
- * Exception class to be used when Flights are not available.
- * 
- * @author YaseenShaik
- *
- */
+
 public class FlightsNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;

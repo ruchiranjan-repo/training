@@ -18,7 +18,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "flightSchedule")
+@Table(name = "FlightSchedule")
 public class FlightSchedule implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -19,7 +19,7 @@ public interface FlightScheduleService {
 
 	public MessageResponseDto updateFlightSchedule(FlightScheduleUpdateRequest flightScheduleRequestDTO);
 
-	public CancelScheduleDto cancelScheduleByScheduleId(Long scheduleId);
+	public CancelScheduleDto cancelScheduleByScheduleId(Long ScheduleId);
 
 	public List<ScheduleResponseDto> getFlightScheduleByFlightCode(String flightCode);
 

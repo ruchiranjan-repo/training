@@ -1,11 +1,5 @@
 package com.demoairline.flightmonitoring.exception;
-/**
- * Exception class to be used when Airline with the provided Airline id not
- * available.
- * 
- * @author YaseenShaik
- *
- */
+
 public class AirLineNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;

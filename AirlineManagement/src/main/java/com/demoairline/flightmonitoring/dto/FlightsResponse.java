@@ -1,12 +1,8 @@
 package com.demoairline.flightmonitoring.dto;
 
-/**
- * Response class for fetching flights details.
- * 
- * @author YaseenShaik
- */
 import java.util.List;
 
+import com.demoairline.flightmonitoring.dto.FlightDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FlightsResponse {
@@ -39,4 +35,5 @@ public class FlightsResponse {
 		this.sizeOfFlightList = sizeOfFlightList;
 	}
 
+	
 }

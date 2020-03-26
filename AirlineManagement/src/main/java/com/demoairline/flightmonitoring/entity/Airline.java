@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name="airline")
+@Table(name="Airline")
 public class Airline  implements Serializable{
 
 	

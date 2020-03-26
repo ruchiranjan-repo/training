@@ -1,5 +1,4 @@
 package com.demoairline.flightmonitoring.restcontrollers;
-
 import java.util.List;
 
 /**
@@ -15,54 +14,56 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demoairline.flightmonitoring.dto.CancelScheduleDto;
 import com.demoairline.flightmonitoring.dto.FlightScheduleRequestDTO;
 import com.demoairline.flightmonitoring.dto.FlightScheduleUpdateRequest;
+import com.demoairline.flightmonitoring.dto.MessageResponseDto;
 import com.demoairline.flightmonitoring.dto.ScheduleResponseDto;
 import com.demoairline.flightmonitoring.services.FlightScheduleService;
 
 @RestController
-@RequestMapping(value = "/flightschedule")
+@RequestMapping(value="/flightschedule")
 public class FlightScheduleRestController {
-
-	@Autowired
+	
+	@Autowired 
 	FlightScheduleService flightScheduleService;
-
-	@PostMapping("")
-	public ResponseEntity<Object> addFlightSchedule(
-			@Valid @RequestBody FlightScheduleRequestDTO flightScheduleRequestDTO) {
-
-		return new ResponseEntity<>(flightScheduleService.addFlightSchedule(flightScheduleRequestDTO),
-				HttpStatus.CREATED);
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Object> addFlightSchedule( @Valid @RequestBody FlightScheduleRequestDTO flightScheduleRequestDTO)
+	{
+		MessageResponseDto messageResponseDto= flightScheduleService.addFlightSchedule(flightScheduleRequestDTO);
+		return new ResponseEntity<>(messageResponseDto,HttpStatus.CREATED);
 	}
-
-	@PutMapping("")
-	public ResponseEntity<Object> updateFlightSchedule(
-			@Valid @RequestBody FlightScheduleUpdateRequest flightScheduleUpdateRequest) {
-
-		return new ResponseEntity<>(flightScheduleService.updateFlightSchedule(flightScheduleUpdateRequest),
-				HttpStatus.OK);
+	
+	@RequestMapping(method=RequestMethod.PUT)
+	public ResponseEntity<Object> updateFlightSchedule( @Valid @RequestBody FlightScheduleUpdateRequest flightScheduleUpdateRequest)
+	{
+		MessageResponseDto messageResponseDto= flightScheduleService.updateFlightSchedule(flightScheduleUpdateRequest);
+		return new ResponseEntity<>(messageResponseDto,HttpStatus.OK);
 	}
-
 	@DeleteMapping("/{scheduleId}")
-	public ResponseEntity<CancelScheduleDto> cancelSchedule(@PathVariable("scheduleId") Long scheduleId) {
+	public ResponseEntity<CancelScheduleDto> cancelSchedule(@PathVariable("scheduleId") Long scheduleId)
+			{
 
-		return new ResponseEntity<>(flightScheduleService.cancelScheduleByScheduleId(scheduleId), HttpStatus.OK);
+		return new ResponseEntity<>(flightScheduleService.cancelScheduleByScheduleId(scheduleId),
+				HttpStatus.OK);
 
 	}
 
 	@GetMapping("")
 	public ResponseEntity<List<ScheduleResponseDto>> getScheduleByFlightCode(
-			@RequestParam("flightCode") String flightCode) {
+			@RequestParam("flightCode") String flightCode)  {
 
-		return new ResponseEntity<>(flightScheduleService.getFlightScheduleByFlightCode(flightCode.trim()), HttpStatus.OK);
+		List<ScheduleResponseDto> scheduleResponseDtos = flightScheduleService
+				.getFlightScheduleByFlightCode(flightCode);
+
+		return new ResponseEntity<>(scheduleResponseDtos, HttpStatus.OK);
 
 	}
 

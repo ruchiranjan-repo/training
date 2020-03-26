@@ -12,7 +12,7 @@ public class AirLineResponse {
 
 	@JsonProperty("airline")
 	private Airline airline;
-	
+
 	@JsonProperty("statusCode")
 	private Integer statusCode = 656;
 
@@ -37,7 +37,5 @@ public class AirLineResponse {
 	public void setStatusCode(Integer statusCode) {
 		this.statusCode = statusCode;
 	}
-	
-	
 
 }

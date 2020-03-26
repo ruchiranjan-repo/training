@@ -1,8 +1,8 @@
 package com.demoairline.flightmonitoring.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class FlightScheduleRepositoryTest {
 		
 		runway= new Runway();
 		
-		runway.setRunwayNumber(TestData.RUNWAY_NAME);
+		runway.setRunway(TestData.RUNWAY_NAME);
 		List<Runway> runways= new ArrayList<>();
 		runways.add(runway);
 		airport.setRunways(runways);
